@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "expoRealm-js",
+    "slug": "expoRealm-js",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
