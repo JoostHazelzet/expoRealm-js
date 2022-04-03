@@ -1,6 +1,6 @@
 # Simple Expo todo app
 
-Simple Expo app with sync with MongoDB Realm using realm-js. Based on template and its instruction from [Expo Realm template read.me] (https://github.com/realm/realm-js/tree/master/templates/expo-template-js#readme). 
+Simple Expo app including sync with MongoDB Realm using realm-js. Based on template and its instruction from [Expo Realm template read.me](https://github.com/realm/realm-js/tree/master/templates/expo-template-js#readme). 
 
 
 ## 🚀 How to use
