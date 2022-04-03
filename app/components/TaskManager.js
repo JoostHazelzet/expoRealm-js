@@ -1,29 +1,18 @@
-import React, { useCallback, useRef, useMemo } from "react";
-import { SafeAreaView, View, StyleSheet } from "react-native";
+import React, {useCallback} from 'react';
+import {View, StyleSheet} from 'react-native';
 
-import TaskRealmContext from './app/models/index';
-import { Task } from "./app/models/Task";
+import {Task} from '../models/Task';
+import {TaskRealmContext} from '../models';
+import {IntroText} from './IntroText';
+import {AddTaskForm} from './AddTaskForm';
+import TaskList from './TaskList';
 
-import IntroText from "./app/components/IntroText";
-import AddTaskForm from "./app/components/AddTaskForm";
-import TaskList from "./app/components/TaskList";
-import colors from "./app/styles/colors";
+const {useRealm} = TaskRealmContext;
 
-const { useRealm, useQuery } = TaskRealmContext;
-
-export const App = (userId) => {
+export const TaskManager = ({ tasks, userId }) => {
   const realm = useRealm();
-  const result = useQuery("Task");
-  const tasks = useMemo(() => result.sorted("createdAt"), [result]);
 
-  useEffect(() => {
-    realm.subscriptions.update(mutableSubs => {
-      mutableSubs.add(result);
-    });
-  }, [realm, result]);
-
-  const handleAddTask = useCallback(
-    (description) => {
+  const handleAddTask = useCallback((description) => {
       if (!description) {
         return;
       }
@@ -36,14 +25,13 @@ export const App = (userId) => {
       // of sync participants to successfully sync everything in the transaction, otherwise
       // no changes propagate and the transaction needs to start over when connectivity allows.
       realm.write(() => {
-        realm.create("Task", new Task({description, userId}));
+        realm.create('Task', Task.generate(description, userId));
       });
     },
     [realm, userId],
   );
 
-  const handleToggleTaskStatus = useCallback(
-    (task) => {
+  const handleToggleTaskStatus = useCallback((task) => {
       realm.write(() => {
         // Normally when updating a record in a NoSQL or SQL database, we have to type
         // a statement that will later be interpreted and used as instructions for how
@@ -66,8 +54,7 @@ export const App = (userId) => {
     [realm],
   );
 
-  const handleDeleteTask = useCallback(
-    (task) => {
+  const handleDeleteTask = useCallback((task) => {
       realm.write(() => {
         realm.delete(task);
 
@@ -79,16 +66,20 @@ export const App = (userId) => {
   );
 
   return (
-      <View style={styles.content}>
-        <AddTaskForm onSubmit={handleAddTask} />
-        {tasks.length === 0 ? (
-          <IntroText />
-        ) : (
-          <TaskList tasks={tasks} onToggleTaskStatus={handleToggleTaskStatus} onDeleteTask={handleDeleteTask} />
-        )}
-      </View>
+    <View style={styles.content}>
+      <AddTaskForm onSubmit={handleAddTask} />
+      {tasks.length === 0 ? (
+        <IntroText />
+      ) : (
+        <TaskList
+          tasks={tasks}
+          onToggleTaskStatus={handleToggleTaskStatus}
+          onDeleteTask={handleDeleteTask}
+        />
+      )}
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   content: {

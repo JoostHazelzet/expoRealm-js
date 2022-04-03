@@ -1,11 +1,12 @@
 import { Realm, createRealmContext } from '@realm/react';
 
 export class Task {
-  constructor({id = new Realm.BSON.ObjectId(), description, isComplete = false}) {
+  constructor({description, userId}) {
+    this._id = new Realm.BSON.ObjectId();
+    this.userId = userId;
     this.description = description;
-    this.isComplete = isComplete;
+    this.isComplete = false;
     this.createdAt = new Date();
-    this._id = id;
   }
 
   // To use a class as a Realm object type, define the object schema on the static property "schema".
@@ -14,14 +15,10 @@ export class Task {
     primaryKey: '_id',
     properties: {
       _id: 'objectId',
+      userId: 'string',
       description: 'string',
       isComplete: {type: 'bool', default: false},
       createdAt: 'date'
     },
   };
 }
-
-export default createRealmContext({
-  schema: [Task.schema],
-  deleteRealmIfMigrationNeeded: true,
-});
