@@ -4,7 +4,8 @@ Simple Expo app including sync with MongoDB Realm using realm-js. Based on templ
 
 
 ## 🚀 How to use
-- Create a Realm app and define the App Id in sync.config-.js and next save it as sync.config.js. 
+- Create the Realm Todo app following [this instruction](https://github.com/realm/realm-js/blob/master/templates/docs/sync-setup.md)
+- Define the App Id in sync.config-.js (folder root) and next save this file as sync.config.js. 
 - Run `yarn install`.
 - Run `expo run:ios -d`.
 
