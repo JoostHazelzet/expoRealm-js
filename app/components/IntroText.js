@@ -8,7 +8,7 @@ function IntroText() {
   return (
     <View style={styles.content}>
       <Text style={styles.paragraph}>
-        Welcome to the Realm React Native JavaScript Template
+        Welcome to the Realm JS Expo app with sync to MongoDb Atlas
       </Text>
       <Text style={styles.paragraph}>
         Start adding a task using the form at the top of the screen to see how

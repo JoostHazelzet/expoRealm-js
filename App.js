@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo } from "react";
-import { SafeAreaView, View, StyleSheet } from "react-native";
+import React, { useCallback, useMemo } from "react";
+import { View, StyleSheet } from "react-native";
 
 import TaskRealmContext from './app/models/index';
 import { Task } from "./app/models/Task";
@@ -7,7 +7,6 @@ import { Task } from "./app/models/Task";
 import IntroText from "./app/components/IntroText";
 import AddTaskForm from "./app/components/AddTaskForm";
 import TaskList from "./app/components/TaskList";
-import colors from "./app/styles/colors";
 
 const { useRealm, useQuery } = TaskRealmContext;
 
@@ -64,24 +63,26 @@ export const App = (userObj) => {
     (task) => {
       realm.write(() => {
         realm.delete(task);
-
-        // Alternatively if passing the ID as the argument to handleDeleteTask:
-        // realm?.delete(realm?.objectForPrimaryKey('Task', id));
       });
     },
     [realm],
   );
 
   return (
-      <View style={styles.content}>
-        <AddTaskForm onSubmit={handleAddTask} />
-        {tasks.length === 0 ? (
-          <IntroText />
-        ) : (
-          <TaskList tasks={tasks} onToggleTaskStatus={handleToggleTaskStatus} onDeleteTask={handleDeleteTask} />
-        )}
-      </View>
+    <View style={styles.content}>
+      <AddTaskForm onSubmit={handleAddTask} />
+      {tasks.length === 0 ? (
+        <IntroText />
+      ) : (
+        <TaskList
+          tasks={tasks}
+          onToggleTaskStatus={handleToggleTaskStatus}
+          onDeleteTask={handleDeleteTask}
+        />
+      )}
+    </View>
   );
+
 }
 
 const styles = StyleSheet.create({
