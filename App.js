@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { SafeAreaView, View, StyleSheet } from "react-native";
 
 import TaskRealmContext from './app/models/index';
@@ -11,16 +11,10 @@ import colors from "./app/styles/colors";
 
 const { useRealm, useQuery } = TaskRealmContext;
 
-export const App = (userId) => {
+export const App = (userObj) => {
   const realm = useRealm();
   const result = useQuery("Task");
   const tasks = useMemo(() => result.sorted("createdAt"), [result]);
-
-  useEffect(() => {
-    realm.subscriptions.update(mutableSubs => {
-      mutableSubs.add(result);
-    });
-  }, [realm, result]);
 
   const handleAddTask = useCallback(
     (description) => {
@@ -36,10 +30,10 @@ export const App = (userId) => {
       // of sync participants to successfully sync everything in the transaction, otherwise
       // no changes propagate and the transaction needs to start over when connectivity allows.
       realm.write(() => {
-        realm.create("Task", new Task({description, userId}));
+        realm.create("Task", new Task({description, userObj}));
       });
     },
-    [realm, userId],
+    [realm, userObj],
   );
 
   const handleToggleTaskStatus = useCallback(

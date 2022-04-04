@@ -8,5 +8,5 @@ import {Task} from './Task';
 
 export default createRealmContext({
   schema: [Task.schema],
-  deleteRealmIfMigrationNeeded: true,
+  // deleteRealmIfMigrationNeeded: true,  // Cannot set 'deleteRealmIfMigrationNeeded' when sync is enabled ('sync.partitionValue' is set).
 });

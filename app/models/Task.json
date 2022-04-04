@@ -4,9 +4,6 @@
       "_id": {
         "bsonType": "objectId"
       },
-      "_partition": {
-        "bsonType": "string"
-      },
       "userId": {
         "bsonType": "string"
       },
@@ -22,7 +19,6 @@
     },
     "required": [
       "_id",
-      "_partition",
       "userId",
       "description",
       "isComplete",

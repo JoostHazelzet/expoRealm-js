@@ -86,14 +86,13 @@ export const AppWrapperSync = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <RealmProvider sync={{user, flexible: false}}>
-        <App userId={realmApp.currentUser.id} >
+      <RealmProvider sync={{user, partitionValue: user?.id, flexible: false}}>
+        <App userId={realmApp.currentUser.id} />
           <Pressable style={styles.authButton} onPress={handleLogout}>
             <Text style={styles.authButtonText}>
               Logout {realmApp.currentUser.profile.email}
             </Text>
           </Pressable>
-        </App>
       </RealmProvider>
     </SafeAreaView>
   );

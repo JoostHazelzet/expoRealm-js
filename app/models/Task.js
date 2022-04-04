@@ -1,9 +1,9 @@
-import { Realm, createRealmContext } from '@realm/react';
+import { Realm } from '@realm/react';
 
 export class Task {
-  constructor({description, userId}) {
+  constructor({description, userObj}) {
     this._id = new Realm.BSON.ObjectId();
-    this.userId = userId;
+    this.userId = userObj.userId;
     this.description = description;
     this.isComplete = false;
     this.createdAt = new Date();
