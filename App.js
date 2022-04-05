@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 
 import TaskRealmContext from './app/models/index';
@@ -14,6 +14,10 @@ export const App = (userObj) => {
   const realm = useRealm();
   const result = useQuery("Task");
   const tasks = useMemo(() => result.sorted("createdAt"), [result]);
+
+  useEffect(() => {
+    console.log('userObj', userObj);
+  }, []); 
 
   const handleAddTask = useCallback(
     (description) => {
